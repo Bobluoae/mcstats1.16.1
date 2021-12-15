@@ -27,15 +27,23 @@ foreach ($myWorlds as $world) {
 		//Send to db
 		mysqli_query($conn, "INSERT INTO worlds SET name = '{$world}'");
 
-		//echo $world;
+		//Skapa sökväg för denna specifika värld till stats filen
 		$worldDir = $saves ."/". $world ."/stats/";
-		//echo $worldDir . "<br>" ;
 
-		//ostbågar
+		//Läs alla filnamn i stats
 		$statDir = laddaDirectory($worldDir);
-		// echo $worldDir . $statDir[0] . "<br>";
+		
+		//Anropa getstats med första filnamnet i mappen
 		if (getStats($worldDir . $statDir[0]) == true) {
 			$allstats[$world] = getStats($worldDir . $statDir[0]);
+
+			//TODO Stoppa in stats i DB för denna värld
+			//
+			//Loopa igenom allstats för att sätta in i DB
+			//
+			//if-satser för att kolla om en stat redan finns
+			//
+			//if value finns, spara i DB 
 		}
 		
 
