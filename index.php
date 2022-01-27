@@ -14,7 +14,7 @@ include "db/database.php";
 ///////////////////////////
 //HÄMTA FRÅN SPELFILERRRRIRIRIRI&&
 
-$saves = "C:\Users\Erik\AppData\Roaming\.minecraft\saves";
+$saves = "C:\\Users\\erik.kallgren\\AppData\\Roaming\\.minecraft\\saves";
 $myWorlds = laddaDirectory($saves);
 $allstats = [];
 
@@ -23,7 +23,7 @@ mysqli_query($conn, "DELETE FROM worlds");
 mysqli_query($conn,  "ALTER TABLE `worlds` AUTO_INCREMENT=1");
 
 foreach ($myWorlds as $world) {
-	if (substr($world, 0, 3) == "New") {
+	//if (substr($world, 0, 3) == "New") {
 		//Send to db
 		mysqli_query($conn, "INSERT INTO worlds SET name = '{$world}'");
 
@@ -47,7 +47,7 @@ foreach ($myWorlds as $world) {
 		}
 		
 
-	}
+	//}
 }
 
 // nu finns stats in en array
@@ -59,6 +59,7 @@ foreach ($myWorlds as $world) {
 	<title></title>
 </head>
 <body>
+
 	<?php foreach($allstats as $title => $stats) : ?>
 	<table border="20">
 		<tr>
@@ -74,5 +75,6 @@ foreach ($myWorlds as $world) {
 		<?php endforeach ?>		
 	</table>
 	<?php endforeach ?>	
+
 </body>
 </html>
