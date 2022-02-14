@@ -5,7 +5,16 @@ function import($conn){
 	mysqli_query($conn, "DELETE FROM worlds");
 	mysqli_query($conn,  "ALTER TABLE `worlds` AUTO_INCREMENT=1");
 
-	$saves = "C:\\Users\\Erik\\AppData\\Roaming\\.minecraft\\saves";
+	mysqli_query($conn, "DELETE FROM stats");
+	mysqli_query($conn,  "ALTER TABLE `stats` AUTO_INCREMENT=1");
+
+	mysqli_query($conn, "DELETE FROM statgroups");
+	mysqli_query($conn,  "ALTER TABLE `statgroups` AUTO_INCREMENT=1");
+
+	mysqli_query($conn, "DELETE FROM world_stat");
+	mysqli_query($conn,  "ALTER TABLE `world_stat` AUTO_INCREMENT=1");
+
+	$saves = "C:\\Users\\erik.kallgren\\AppData\\Roaming\\.minecraft\\saves";
 	$myWorlds = laddaDirectory($saves);
 	$allstats = [];
 
@@ -33,10 +42,14 @@ function import($conn){
 
 				//skapa statgroup om inte finns
 				
-				$test = mysqli_query($conn, "SELECT groupname FROM statgroups WHERE groupname = '{$statnameparts[1]}'");
+				$test = mysqli_query($conn, "SELECT id, groupname FROM statgroups WHERE groupname = '{$statnameparts[1]}'");
 
 				if (mysqli_num_rows($test) == 0) {
 					mysqli_query($conn, "INSERT INTO statgroups SET groupname = '{$statnameparts[1]}'");
+					$statgroup_id = mysqli_insert_id($conn);
+				} else {
+					$res = mysqli_fetch_array($test); 
+					$statgroup_id = $res["id"];
 				}
 				
 
@@ -46,13 +59,14 @@ function import($conn){
 
 
 				if (mysqli_num_rows($test2) == 0) {
-					mysqli_query($conn, "INSERT INTO stats SET statname = '{$statnameparts[2]}'");
+					$sql = "INSERT INTO stats SET statname = '{$statnameparts[2]}', statgroup_id = {$statgroup_id}";
+
+					mysqli_query($conn, $sql);
 					$statId = mysqli_insert_id($conn);
 				} else {
 					$res = mysqli_fetch_array($test2); 
 					$statId = $res["id"];
 				}
-
 
 
 				//skapa value för 1 stat på 1 world
