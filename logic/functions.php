@@ -1,5 +1,22 @@
 <?php 
 
+function post($name){
+	if (!isset($_POST[$name])) {
+		return "";
+	}
+	return $_POST[$name];
+}
+function get($name){
+	if (!isset($_GET[$name])) {
+		return "";
+	}
+	return $_GET[$name];
+}
+
+
+
+
+
 function laddaDirectory($dir){
 	// Open a known directory, and proceed to read its contents
 	$directory = array();

@@ -18,12 +18,10 @@ function import($conn){
 	$myWorlds = laddaDirectory($saves);
 	$allstats = [];
 
-
 	foreach ($myWorlds as $world) {
 	//if (substr($world, 0, 3) == "New") {
 		//Send to db
 		mysqli_query($conn, "INSERT INTO worlds SET name = '{$world}'");
-
 		$worldId = mysqli_insert_id($conn);
 
 		//Skapa sökväg för denna specifika värld till stats filen
@@ -37,50 +35,40 @@ function import($conn){
 			$allstats[$world] = getStats($worldDir . $statDir[0]);
 
 			foreach($allstats[$world] as $key => $value){
+
 				//Separera stat namnet
 				$statnameparts = explode( "/", $key);
 
-				//skapa statgroup om inte finns
-				
-				$test = mysqli_query($conn, "SELECT id, groupname FROM statgroups WHERE groupname = '{$statnameparts[1]}'");
+				//titta om statgroup redan finns
+				$query = mysqli_query($conn, "SELECT id, groupname FROM statgroups WHERE groupname = '{$statnameparts[1]}'");
 
-				if (mysqli_num_rows($test) == 0) {
+				if (mysqli_num_rows($query) === 0) {
+					//den fanns inte 
 					mysqli_query($conn, "INSERT INTO statgroups SET groupname = '{$statnameparts[1]}'");
 					$statgroup_id = mysqli_insert_id($conn);
 				} else {
-					$res = mysqli_fetch_array($test); 
+					//den fanns
+					$res = mysqli_fetch_array($query); 
 					$statgroup_id = $res["id"];
 				}
 				
+				//titta om denna stats redan finns
+				$query2 = mysqli_query($conn, "SELECT id, statname FROM stats WHERE statname = '{$statnameparts[2]}' AND statgroup_id = {$statgroup_id}");
 
-				//skapa stats om inte finns
-				$test2 = mysqli_query($conn, "SELECT id, statname FROM stats WHERE statname = '{$statnameparts[2]}'");
-
-
-
-				if (mysqli_num_rows($test2) == 0) {
+				if (mysqli_num_rows($query2) === 0) {
+					//den fanns inte 
 					$sql = "INSERT INTO stats SET statname = '{$statnameparts[2]}', statgroup_id = {$statgroup_id}";
-
 					mysqli_query($conn, $sql);
 					$statId = mysqli_insert_id($conn);
 				} else {
-					$res = mysqli_fetch_array($test2); 
+					//den fanns
+					$res = mysqli_fetch_array($query2); 
 					$statId = $res["id"];
 				}
-
 
 				//skapa value för 1 stat på 1 world
 				mysqli_query($conn, "INSERT INTO world_stat SET world_id = '{$worldId}', stat_id='{$statId}', value = {$value}");
 			}
-
-
-			//TODO Stoppa in stats i DB för denna värld
-			//
-			//Loopa igenom allstats för att sätta in i DB
-			//
-			//if-satser för att kolla om en stat redan finns
-			//
-			//if value finns, spara i DB 
 		}
 	}
 }
