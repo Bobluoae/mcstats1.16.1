@@ -39,7 +39,7 @@ if (get("world")=="chosen") {
 
 	while($statgroups = mysqli_fetch_assoc($query)){
 		// echo $statgroups["id"] . " | " . $statgroups["groupname"] . "<br>";
-		$link = "?world_id=" . get("world_id") . "&page=worlds&world=chosen&group=" . $statgroups["id"];
+		$link = "?world_id=" . get("world_id") . "&page=worlds&world=chosen&group=" . $statgroups["id"] . "&groupname=" . $statgroups["groupname"];
 		echo $statgroups["id"] . ' | <a href="' . $link . '">' . $statgroups["groupname"] . '</a><br>';
 
 	}
@@ -69,43 +69,9 @@ if (get("world")=="chosen") {
 				g.groupname, s.statname;
 		");
 
-
-			$gnq = mysqli_query($conn, "
-			SELECT
-				w.name, g.groupname, s.statname, ws.world_id, ws.stat_id, ws.value
-			FROM
-			 	worlds as w,
-			 	statgroups as g,
-			 	stats as s,
-			 	world_stat as ws
-			WHERE
-			 	ws.stat_id = s.id
-			AND
-			 	s.statgroup_id = g.id
-			AND
-			 	w.id = ws.world_id
-			AND
-			 	ws.world_id = " . get("world_id") . "
-			AND 
-				g.id = " . get("group") . "
-			ORDER BY
-				g.groupname, s.statname;");
-
-			$groupname = mysqli_fetch_assoc($gnq);
-
-			if (!isset($groupname["groupname"])) {
-				$groupname["groupname"] = "";
-				echo "Groupname is not set. <br>"; 
-			}
-			else if (empty($groupname["groupname"])){
-				echo "Groupname is set but contains only 1 item <br>"; 
-				foreach ($groupname as $key => $value) {
-					echo $key . " | " . $value . "<br>";
-				}
-
-			}
-			else{
-				echo "Group [" . $groupname["groupname"] . "] is chosen <br>"; 
+			if (get("groupname")) {
+			
+				echo "Group [" . get("groupname") . "] is chosen <br>"; 
 			}
 		?>
 		<table border=1>
