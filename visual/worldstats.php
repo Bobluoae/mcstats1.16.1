@@ -70,7 +70,29 @@ if (get("world")=="chosen") {
 		");
 
 
-			$groupname = mysqli_fetch_assoc($query);
+			$gnq = mysqli_query($conn, "
+			SELECT
+				w.name, g.groupname, s.statname, ws.world_id, ws.stat_id, ws.value
+			FROM
+			 	worlds as w,
+			 	statgroups as g,
+			 	stats as s,
+			 	world_stat as ws
+			WHERE
+			 	ws.stat_id = s.id
+			AND
+			 	s.statgroup_id = g.id
+			AND
+			 	w.id = ws.world_id
+			AND
+			 	ws.world_id = " . get("world_id") . "
+			AND 
+				g.id = " . get("group") . "
+			ORDER BY
+				g.groupname, s.statname;");
+
+			$groupname = mysqli_fetch_assoc($gnq);
+
 			if (!isset($groupname["groupname"])) {
 				$groupname["groupname"] = "";
 				echo "Groupname is not set. <br>"; 
