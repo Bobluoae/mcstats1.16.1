@@ -41,12 +41,11 @@ if (get("world")=="chosen") {
 		// echo $statgroups["id"] . " | " . $statgroups["groupname"] . "<br>";
 		$link = "?world_id=" . get("world_id") . "&page=worlds&world=chosen&group=" . $statgroups["id"];
 		echo $statgroups["id"] . ' | <a href="' . $link . '">' . $statgroups["groupname"] . '</a><br>';
+
 	}
 
 
 	if (is_numeric(get("group"))) {
-
-		echo "Group " . get("group") . " is chosen <br>"; 
 
 		$query = mysqli_query($conn, "
 			SELECT
@@ -64,10 +63,28 @@ if (get("world")=="chosen") {
 			 	w.id = ws.world_id
 			AND
 			 	ws.world_id = " . get("world_id") . "
+			AND 
+				g.id = " . get("group") . "
 			ORDER BY
 				g.groupname, s.statname;
 		");
 
+
+			$groupname = mysqli_fetch_assoc($query);
+			if (!isset($groupname["groupname"])) {
+				$groupname["groupname"] = "";
+				echo "Groupname is not set. <br>"; 
+			}
+			else if (empty($groupname["groupname"])){
+				echo "Groupname is set but contains only 1 item <br>"; 
+				foreach ($groupname as $key => $value) {
+					echo $key . " | " . $value . "<br>";
+				}
+
+			}
+			else{
+				echo "Group [" . $groupname["groupname"] . "] is chosen <br>"; 
+			}
 		?>
 		<table border=1>
 		<tr>
@@ -75,6 +92,7 @@ if (get("world")=="chosen") {
 		<th>Value</th>
 		</tr>
 		<?php
+
 		while($row = mysqli_fetch_assoc($query)) {
 			echo "<tr>";
 			echo "<td>" . $row["statname"] . "</td>";
