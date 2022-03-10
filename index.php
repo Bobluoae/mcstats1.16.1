@@ -2,7 +2,9 @@
 include "db/database.php";
 include "logic/functions.php";
 include "logic/import.php";
-
+//Pages
+include "visual/header.php";
+include "visual/navbar.php";
 //ISSET
 // if (!isset($_GET["page"])) {
 //     $_GET["page"] = "";
@@ -32,9 +34,7 @@ if (post("action") == "import") {
 // }
 
 
-//Pages
-include "visual/header.php";
-include "visual/navbar.php";
+
 
 if (get("page") == "worlds") {
  	include "visual/worlds.php";
