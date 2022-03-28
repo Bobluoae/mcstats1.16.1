@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password = "password";
+$password = "HemData531";
 $database = "worldstats";
 
 // Create connection
