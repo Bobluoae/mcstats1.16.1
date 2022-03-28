@@ -14,7 +14,7 @@ function import($conn){
 	mysqli_query($conn, "DELETE FROM world_stat");
 	mysqli_query($conn,  "ALTER TABLE `world_stat` AUTO_INCREMENT=1");
 
-	$saves = "C:\\Users\\erik.kallgren\\AppData\\Roaming\\.minecraft\\saves";
+	$saves = "C:\\Users\\Erik\\AppData\\Roaming\\.minecraft\\saves";
 	$myWorlds = laddaDirectory($saves);
 	$allstats = [];
 
