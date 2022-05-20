@@ -1,5 +1,5 @@
 <?php 
-
+//post and get functions to not have to do isset everytime
 function post($name){
 	if (!isset($_POST[$name])) {
 		return "";
@@ -13,37 +13,52 @@ function get($name){
 	return $_GET[$name];
 }
 
+if (!isset($_SESSION["path"])) {
+	$_SESSION["path"] = "";
+}
 
+//error handling
+$message = "";
+$error = false;
 
-
-
+//Load a directory from path specified by user
 function laddaDirectory($dir){
-	// Open a known directory, and proceed to read its contents
+	
 	$directory = array();
+
+	// Check if the path is a directory
 	if (is_dir($dir)) {
+
+		//Open the directory
 	    if ($dh = opendir($dir)) {
+
+	    	//Loop through the directory and while it contains files, read directory of all files
 	        while (($entry = readdir($dh)) !== false) {
 
 	        	if (substr($entry, 0, 1) !== ".") {
 	        		$directory[] = $entry;
 	        	}
-	            //. filetype($dir . $entry) . "\n";
 	        }
+	        //Close accessed directory
 	        closedir($dh);
 	    }
 	}
 	return $directory;
 }
 
+//Get all statistics from path
 function getStats($aPathfile){
-	//echo nl2br(Read("C:\Users\Erik\AppData\Roaming\.minecraft\saves\New World\stats/71b8e290-9b39-4f4c-ae8f-2070a235d961.json"));
+
+	//Decode statistics json file
 	$file = file_get_contents($aPathfile);
 	$j = json_decode($file);
 
 	$stats = array();
 
+	//If json has stats
 	if (isset($j->stats)) {
-			# code...
+			
+		//loop through every statistic and replace minecraft: with a /  
 		foreach ($j->stats as $mainkey => $mainvalue) {
 
 			foreach ($mainvalue as $key => $value) {
@@ -52,8 +67,7 @@ function getStats($aPathfile){
 				$stats[$keyname] = $value;
 			}
 		}
-		
-
+		//Return all statistics
 		return $stats;
 	} else {
 		return false;

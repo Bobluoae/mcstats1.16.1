@@ -1,5 +1,6 @@
 <?php
-$servername = "localhost";
+//DB login
+$servername = "127.0.0.1";
 $username = "root";
 $password = "HemData531";
 $database = "worldstats";

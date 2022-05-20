@@ -18,8 +18,9 @@ input, select {
 }
 .content {
   margin: auto;
-  width: 50%;
+  width: 70%;
   border: 3px solid black;
+  border-radius: 10px;
   background-color: gold;
   padding: 10px;
   text-align: center;
@@ -27,14 +28,30 @@ input, select {
 }
 
 #tablebox{
-background-color: lightblue;
-max-width: 35%;
+max-width: 400px;
 margin: auto;
-font-size: 20px;
 
+
+}
+.color {
+	min-width: 100%;
+	background-color: lightblue;
+	font-size: 20px;
 }
 
 table{
 	width: 100%;
 	font-size: 20px;
+}
+
+@media only screen and (max-width: 1120px) {
+	.content {
+		width: 95%;
+	}
+}
+.box {
+	max-width: 400px; 
+	border: solid 2px black;
+	border-radius: 10px;
+	margin: auto;
 }
