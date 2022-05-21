@@ -38,11 +38,13 @@ $query = mysqli_query($conn, "SELECT * FROM `worlds`");
 		//Select every entry from the table statgroups
 		$query = mysqli_query($conn, "SELECT * FROM `statgroups`");
 
+		$count = 1;
+
 		//Loop for every item in the query and insert data into a clickable link
 		while($statgroups = mysqli_fetch_assoc($query)) {
 			
 			$link = "?world_id=" . get("world_id") . "&page=worlds&world=chosen&group=" . $statgroups["id"] . "&groupname=" . $statgroups["groupname"];
-			echo $statgroups["id"] . ' | <a href="' . $link . '">' . $statgroups["groupname"] . '</a><br>';
+			echo $count++ . ' | <a href="' . $link . '">' . $statgroups["groupname"] . '</a><br>';
 
 		}
 
