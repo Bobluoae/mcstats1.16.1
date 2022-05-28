@@ -15,7 +15,8 @@ DROP TABLE IF EXISTS `statgroups`;
 CREATE TABLE `statgroups` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `groupname` varchar(255) COLLATE utf8mb4_swedish_ci NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `groupname` (`groupname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 
@@ -23,7 +24,7 @@ DROP TABLE IF EXISTS `stats`;
 CREATE TABLE `stats` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `statname` varchar(255) COLLATE utf8mb4_swedish_ci NOT NULL,
-  `statgroup_id` int(10) unsigned NOT NULL,
+  `statgroup_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
@@ -42,3 +43,6 @@ CREATE TABLE `world_stat` (
   `stat_id` int(10) unsigned NOT NULL,
   `value` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
+
+
+-- 2022-05-28 14:33:18

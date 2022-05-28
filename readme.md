@@ -1,23 +1,33 @@
-# Minecraft stat collection database
+# Minecraft Statistics | Visualized
 
-Nej
+Syftet med webbapplikationen är att uppfylla kraven som uppgiftsbeskrivningen som skolan gav i Tillämpad programmering. Webbappen ska låta användaren spara och visa statistiken av en värld som användaren har valt. Allt som behövs är att skriva sin path till sin minecraft/saves folder för att skriptet ska fungera OM man har en databas uppsatt.
 
-## TODO
+## Struktur
+```
+│   index.php
+│   readme.md
+│
+├───db
+│       create_db.sql
+│       database.php
+│
+├───logic
+│       functions.php
+│       import.php
+│
+├───styles
+│       stylesheet.css
+│
+└───visual
+        footer.php
+        header.php
+        main.php
+        navbar.php
+        worldstats.php
+```
 
-Ta världar spara dom med deras stats i en databas
+## För att få igång projektet 
 
-Huvudmeny STARTSIDA
-Knapp som importerar världarnas och världarnas stats/Knapp som uppdaterar världarna och stats
-Knapp som går till världarna
+1. Klona repot till din dator med 'git clone https://github.com/Bobluoae/mcstats1.13-plus.git' i din laragon/www folder i Laragon.
 
-
-ANDRA SIDA som har alla tabeller
-Choose world via drop down menu i tabellen, Dropdown menyer i tabellerna
-Sökfunktion som letar
-
-
-
-Specifics:
-
-Class som gör drop down menyerna för kategorierna
-"Importera" gör så att databasen renewar sig själv
+2. Kör det relevanta SQL skriptet i din relevanta databas. Skriptet kan hittas i "db" foldern
