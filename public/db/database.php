@@ -2,7 +2,7 @@
 //DB login
 $servername = "127.0.0.1";
 $username = "root";
-$password = "HemData531";
+$password = "password";
 $database = "worldstats";
 
 // Create connection
