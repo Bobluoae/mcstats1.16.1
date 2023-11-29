@@ -1,6 +1,6 @@
 <?php
 
-//The users Windows minecraft saves directory 
+//The users Windows minecraft saves directory
 if (isset($_POST["path"])) {
 	$saves = $_POST["path"];
 	$_SESSION["path"] = $saves;
@@ -14,11 +14,11 @@ function import($conn){
 	global $error;
 	global $message;
 	//Is specified path a directory?
-	if (is_dir($_SESSION["path"])) { 
+	if (is_dir($_SESSION["path"])) {
 
 		//Try catch block to make sure it doesnt throw errors at the user
 		try {
-		
+
 			// clear db before inputing new data
 			mysqli_query($conn, "DELETE FROM worlds");
 			mysqli_query($conn,  "ALTER TABLE `worlds` AUTO_INCREMENT=1");
@@ -57,7 +57,7 @@ function import($conn){
 
 				//Read all files in stats folder - Should only be one file
 				$statDir = laddaDirectory($worldDir);
-				
+
 				//Call getStats function with the directory of the first file
 				if (getStats($worldDir . $statDir[0]) == true) {
 
@@ -82,10 +82,10 @@ function import($conn){
 						} else {
 
 							//If the groupname already existed for this statistic, get the id of the statgroup
-							$res = mysqli_fetch_array($query); 
+							$res = mysqli_fetch_array($query);
 							$statgroup_id = $res["id"];
 						}
-						
+
 						//Check if this statname already exists
 						$query2 = mysqli_query($conn, "SELECT id, statname FROM stats WHERE statname = '{$statnameparts[2]}' AND statgroup_id = {$statgroup_id}");
 
@@ -96,7 +96,7 @@ function import($conn){
 							$statId = mysqli_insert_id($conn);
 						} else {
 							//If not get the id of the statname
-							$res = mysqli_fetch_array($query2); 
+							$res = mysqli_fetch_array($query2);
 							$statId = $res["id"];
 						}
 

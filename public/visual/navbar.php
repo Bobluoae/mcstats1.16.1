@@ -11,6 +11,9 @@
     $name = $metadata->data->player->username;
 
     echo $name;
+
+    //$uuiddir = $_SESSION["path"] ."/". $world ."/stats/";
+    //echo $uuiddir;
     ?>
 <ul>
 	<li><a href="index.php">Main</a> <br></li>
