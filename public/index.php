@@ -1,8 +1,11 @@
-<?php 
+<?php
 session_start();
 include "db/database.php";
 include "logic/functions.php";
 include "logic/import.php";
+include "logic/uuidfinder.php";
+
+// $players = new UuidFinder();
 
 //Call to function named import when button is pressed to read import all data into database
 if (post("action") == "import") {
