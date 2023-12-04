@@ -8,9 +8,12 @@ class UuidFinder
         $playerFiles = laddaDirectory($statsPath);
 
         $playerData = [];
+        $uuids = [];
 
         foreach ($playerFiles as &$file) {
+
             $uuid = str_replace("-","",substr($file, 0, -5));
+            $this->uuids =+ $uuid;
 
             $url = "https://playerdb.co/api/player/minecraft/".$uuid;
 
@@ -22,19 +25,14 @@ class UuidFinder
             $playerData[$uuid]["name"] = $metadata->data->player->username;
             $playerData[$uuid]["metadata"] = $metadata;
 
+
         }
-        var_dump($playerData);
-        die();
-
-       // $url = "https://playerdb.co/api/player/minecraft/".str_replace("-","",$uuid);
-
-        // $playerjson = file_get_contents($url);
-        // $metadata = json_decode($playerjson);
-
-        // $name = $metadata->data->player->username;
-
-
+        $this->playerData = $playerData;
     }
+/*    public function getPlayerNames() {
+        return $this->playerData[$uuids[0]];
+
+    }*/
 }
 
 

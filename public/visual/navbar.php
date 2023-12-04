@@ -2,7 +2,7 @@
 	<!-- navbar -->
 
     <?php
-    $uuid = "71b8e290-9b39-4f4c-ae8f-2070a235d961";
+/*    $uuid = "71b8e290-9b39-4f4c-ae8f-2070a235d961";
     $url = "https://playerdb.co/api/player/minecraft/".str_replace("-","",$uuid);
 
     $playerjson = file_get_contents($url);
@@ -13,7 +13,16 @@
     echo $name;
 
     //$uuiddir = $_SESSION["path"] ."/". $world ."/stats/";
-    //echo $uuiddir;
+    //echo $uuiddir; */
+
+    $players = new UuidFinder();
+
+    foreach ($players->playerData as $key => $value) {
+        echo $key . " | " . $value . "<br>";
+
+    }
+    var_dump($players->playerData["name"]);
+
     ?>
 <ul>
 	<li><a href="index.php">Main</a> <br></li>
